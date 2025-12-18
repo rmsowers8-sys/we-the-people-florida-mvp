@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-muted text-gray-900 antialiased font-sans;
+}
+
+a {
+  @apply text-primary hover:text-primary/80;
+}
+
+button:focus-visible,
+[role='button']:focus-visible,
+input:focus-visible {
+  @apply outline-none ring-2 ring-primary ring-offset-2;
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
