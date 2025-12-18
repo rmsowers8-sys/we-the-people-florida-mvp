@@ -27,10 +27,10 @@ export default function CountyPage() {
   const [openLegislationId, setOpenLegislationId] = useState<string | null>(null);
   const [openPostId, setOpenPostId] = useState<string | null>(null);
 
-  const countyOfficials = useMemo(() => officials.filter((o) => o.countySlug === slug), [slug]);
-  const countyLegislation = useMemo(() => legislation.filter((item) => item.countySlug === slug), [slug]);
-  const countyBudget = useMemo(() => budgets.find((b) => b.countySlug === slug), [slug]);
-  const countyPosts = useMemo(() => posts.filter((p) => p.countySlug === slug), [slug]);
+  const countyOfficials = officials.filter((o) => o.countySlug === slug);
+const countyLegislation = legislation.filter((item) => item.countySlug === slug);
+const countyBudget = budgets.find((b) => b.countySlug === slug);
+const countyPosts = posts.filter((p) => p.countySlug === slug);
 
   if (!county) {
   return notFound();
