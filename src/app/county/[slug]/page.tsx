@@ -27,14 +27,14 @@ export default function CountyPage() {
   const [openLegislationId, setOpenLegislationId] = useState<string | null>(null);
   const [openPostId, setOpenPostId] = useState<string | null>(null);
 
-  if (!county) {
-    return notFound();
-  }
-
   const countyOfficials = useMemo(() => officials.filter((o) => o.countySlug === slug), [slug]);
   const countyLegislation = useMemo(() => legislation.filter((item) => item.countySlug === slug), [slug]);
   const countyBudget = useMemo(() => budgets.find((b) => b.countySlug === slug), [slug]);
   const countyPosts = useMemo(() => posts.filter((p) => p.countySlug === slug), [slug]);
+
+  if (!county) {
+  return notFound();
+}
 
   const formatCurrency = (value: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
