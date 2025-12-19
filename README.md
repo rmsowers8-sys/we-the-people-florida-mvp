@@ -18,8 +18,9 @@ A mobile-first, Florida-only civic snapshot built with Next.js (App Router), Typ
 
 1. Push this repo to your Git provider.
 2. In Vercel, create a new project and import the repo.
-3. Keep the default build command (`next build`) and output (`.next`).
-4. Deploy — the App Router + Tailwind setup works without extra configuration.
+3. Ensure the **Root Directory** points to the repo root (the folder that contains `package.json`).
+4. Keep the default build command (`next build`) and output (`.next`).
+5. Deploy — the App Router + Tailwind setup works without extra configuration.
 
 ## What this MVP includes
 - Landing page with quick entry to county selection or a Leon County demo.
