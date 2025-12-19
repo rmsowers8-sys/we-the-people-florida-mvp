@@ -17,14 +17,18 @@ const tabs = [
 
 type TabKey = (typeof tabs)[number]['key'];
 
+const getCountyData = (slug: string) => ({
+  county: counties.find((c) => c.slug === slug),
+  countyOfficials: officials.filter((o) => o.countySlug === slug),
+  countyLegislation: legislation.filter((item) => item.countySlug === slug),
+  countyBudget: budgets.find((b) => b.countySlug === slug),
+  countyPosts: posts.filter((p) => p.countySlug === slug),
+});
+
 export default function CountyPage() {
   const { slug } = useParams<{ slug: string }>();
   const router = useRouter();
-  const county = counties.find((c) => c.slug === slug);
-  const countyOfficials = officials.filter((o) => o.countySlug === slug);
-  const countyLegislation = legislation.filter((item) => item.countySlug === slug);
-  const countyBudget = budgets.find((b) => b.countySlug === slug);
-  const countyPosts = posts.filter((p) => p.countySlug === slug);
+  const { county, countyOfficials, countyLegislation, countyBudget, countyPosts } = getCountyData(slug);
 
   const [activeTab, setActiveTab] = useState<TabKey>('officials');
   const [openOfficialId, setOpenOfficialId] = useState<string | null>(null);
