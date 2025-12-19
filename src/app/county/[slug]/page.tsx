@@ -20,7 +20,11 @@ type TabKey = (typeof tabs)[number]['key'];
 export default function CountyPage() {
   const { slug } = useParams<{ slug: string }>();
   const router = useRouter();
-  const county = counties.find((c) => c.slug === slug);
+  const county = useMemo(() => counties.find((c) => c.slug === slug), [slug]);
+  const countyOfficials = useMemo(() => officials.filter((o) => o.countySlug === slug), [slug]);
+  const countyLegislation = useMemo(() => legislation.filter((item) => item.countySlug === slug), [slug]);
+  const countyBudget = useMemo(() => budgets.find((b) => b.countySlug === slug), [slug]);
+  const countyPosts = useMemo(() => posts.filter((p) => p.countySlug === slug), [slug]);
 
   const [activeTab, setActiveTab] = useState<TabKey>('officials');
   const [openOfficialId, setOpenOfficialId] = useState<string | null>(null);
@@ -30,11 +34,6 @@ export default function CountyPage() {
   if (!county) {
     return notFound();
   }
-
-  const countyOfficials = useMemo(() => officials.filter((o) => o.countySlug === slug), [slug]);
-  const countyLegislation = useMemo(() => legislation.filter((item) => item.countySlug === slug), [slug]);
-  const countyBudget = useMemo(() => budgets.find((b) => b.countySlug === slug), [slug]);
-  const countyPosts = useMemo(() => posts.filter((p) => p.countySlug === slug), [slug]);
 
   const formatCurrency = (value: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
