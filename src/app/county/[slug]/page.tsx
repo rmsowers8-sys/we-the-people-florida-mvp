@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { notFound, useParams, useRouter } from 'next/navigation';
 import { TopBar } from '@/components/TopBar';
 import { TabBar } from '@/components/TabBar';
@@ -20,11 +20,11 @@ type TabKey = (typeof tabs)[number]['key'];
 export default function CountyPage() {
   const { slug } = useParams<{ slug: string }>();
   const router = useRouter();
-  const county = useMemo(() => counties.find((c) => c.slug === slug), [slug]);
-  const countyOfficials = useMemo(() => officials.filter((o) => o.countySlug === slug), [slug]);
-  const countyLegislation = useMemo(() => legislation.filter((item) => item.countySlug === slug), [slug]);
-  const countyBudget = useMemo(() => budgets.find((b) => b.countySlug === slug), [slug]);
-  const countyPosts = useMemo(() => posts.filter((p) => p.countySlug === slug), [slug]);
+  const county = counties.find((c) => c.slug === slug);
+  const countyOfficials = officials.filter((o) => o.countySlug === slug);
+  const countyLegislation = legislation.filter((item) => item.countySlug === slug);
+  const countyBudget = budgets.find((b) => b.countySlug === slug);
+  const countyPosts = posts.filter((p) => p.countySlug === slug);
 
   const [activeTab, setActiveTab] = useState<TabKey>('officials');
   const [openOfficialId, setOpenOfficialId] = useState<string | null>(null);
