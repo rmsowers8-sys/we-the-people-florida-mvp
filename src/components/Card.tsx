@@ -1,38 +1,35 @@
-"use client";
+import { ReactNode } from "react";
+import clsx from "clsx";
 
-type Tab = { key: string; label: string };
-
-export default function TabBar({
-  tabs,
-  activeKey,
-  onChange,
+export default function Card({
+  children,
+  className,
+  onClick,
 }: {
-  tabs: Tab[];
-  activeKey: string;
-  onChange: (key: string) => void;
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
 }) {
+  const clickable = typeof onClick === "function";
   return (
-    <div className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-border">
-      <div className="mx-auto flex max-w-md gap-1 p-2">
-        {tabs.map((t) => {
-          const active = t.key === activeKey;
-          return (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => onChange(t.key)}
-              className={[
-                "flex-1 rounded-full px-3 py-2 text-sm transition",
-                active
-                  ? "bg-black text-white"
-                  : "bg-transparent text-gray-700 hover:bg-gray-100",
-              ].join(" ")}
-            >
-              {t.label}
-            </button>
-          );
-        })}
-      </div>
+    <div
+      onClick={onClick}
+      className={clsx(
+        "rounded-2xl border border-border bg-white p-4 shadow-sm",
+        clickable && "cursor-pointer hover:shadow-md transition",
+        className
+      )}
+      role={clickable ? "button" : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      onKeyDown={
+        clickable
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") onClick?.();
+            }
+          : undefined
+      }
+    >
+      {children}
     </div>
   );
 }
