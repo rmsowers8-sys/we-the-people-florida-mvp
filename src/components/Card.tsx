@@ -1,28 +1,38 @@
-import React from 'react';
+"use client";
 
-export type CardProps = {
-  children: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
-};
+type Tab = { key: string; label: string };
 
-export function Card({ children, onClick, className = '' }: CardProps) {
-  const clickable = Boolean(onClick);
+export default function TabBar({
+  tabs,
+  activeKey,
+  onChange,
+}: {
+  tabs: Tab[];
+  activeKey: string;
+  onChange: (key: string) => void;
+}) {
   return (
-    <div
-      role={clickable ? 'button' : undefined}
-      tabIndex={clickable ? 0 : undefined}
-      onClick={onClick}
-      onKeyDown={(event) => {
-        if (!clickable) return;
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          onClick?.();
-        }
-      }}
-      className={`rounded-2xl bg-white p-4 shadow-card ${clickable ? 'cursor-pointer hover:-translate-y-0.5 hover:shadow-lg transition' : ''} ${className}`}
-    >
-      {children}
+    <div className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-border">
+      <div className="mx-auto flex max-w-md gap-1 p-2">
+        {tabs.map((t) => {
+          const active = t.key === activeKey;
+          return (
+            <button
+              key={t.key}
+              type="button"
+              onClick={() => onChange(t.key)}
+              className={[
+                "flex-1 rounded-full px-3 py-2 text-sm transition",
+                active
+                  ? "bg-black text-white"
+                  : "bg-transparent text-gray-700 hover:bg-gray-100",
+              ].join(" ")}
+            >
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
