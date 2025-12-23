@@ -1,50 +1,38 @@
-'use client';
+"use client";
 
-import clsx from 'clsx';
-import { useEffect } from 'react';
+type Tab = { key: string; label: string };
 
-export type TabOption<T extends string> = {
-  key: T;
-  label: string;
-};
-
-type TabBarProps<T extends string> = {
-  options: TabOption<T>[];
-  active: T;
-  onChange: (key: T) => void;
-};
-
-export function TabBar<T extends string>({ options, active, onChange }: TabBarProps<T>) {
-  useEffect(() => {
-    const listener = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
-        event.preventDefault();
-        const index = options.findIndex((o) => o.key === active);
-        const direction = event.key === 'ArrowRight' ? 1 : -1;
-        const nextIndex = (index + direction + options.length) % options.length;
-        onChange(options[nextIndex].key);
-      }
-    };
-    window.addEventListener('keydown', listener);
-    return () => window.removeEventListener('keydown', listener);
-  }, [active, onChange, options]);
-
+export default function TabBar({
+  tabs,
+  activeKey,
+  onChange,
+}: {
+  tabs: Tab[];
+  activeKey: string;
+  onChange: (key: string) => void;
+}) {
   return (
-    <div className="flex gap-2 overflow-x-auto border-b border-border bg-white px-4 pb-2">
-      {options.map((option) => (
-        <button
-          key={option.key}
-          className={clsx(
-            'whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors',
-            active === option.key
-              ? 'bg-primary text-white shadow-card'
-              : 'bg-muted text-gray-700 hover:bg-gray-200'
-          )}
-          onClick={() => onChange(option.key)}
-        >
-          {option.label}
-        </button>
-      ))}
+    <div className="sticky top-0 z-10 bg-white/90 backdrop-blur border-b border-border">
+      <div className="mx-auto flex max-w-md gap-1 p-2">
+        {tabs.map((t) => {
+          const active = t.key === activeKey;
+          return (
+            <button
+              key={t.key}
+              type="button"
+              onClick={() => onChange(t.key)}
+              className={[
+                "flex-1 rounded-full px-3 py-2 text-sm transition",
+                active
+                  ? "bg-black text-white"
+                  : "bg-transparent text-gray-700 hover:bg-gray-100",
+              ].join(" ")}
+            >
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
