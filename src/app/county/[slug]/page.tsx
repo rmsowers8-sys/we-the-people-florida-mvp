@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { notFound, useParams, useRouter } from 'next/navigation';
 import { TopBar } from '@/components/TopBar';
-import { TabBar } from '@/components/TabBar';
-import { Card } from '@/components/Card';
-import { Modal } from '@/components/Modal';
+import TabBar from '../../../components/TabBar'
+import Card from '../../../components/Card'
+import Modal from '../../../components/Modal'
 import { budgets, counties, legislation, officials, posts } from '@/data/florida';
 
 const tabs = [
